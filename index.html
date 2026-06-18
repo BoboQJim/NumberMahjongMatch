@@ -1,0 +1,1841 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Number Mahjong Match - Brain Math Puzzle | Free Online Arithmetic Game</title>
+  <meta name="description" content="Play Number Mahjong, a challenging brain math puzzle game. Select 3 number tiles and use + - × ÷ to reach the target. 100 increasingly difficult levels of arithmetic training. Free online mahjong math game — no download required.">
+  <meta name="keywords" content="number mahjong, math puzzle, brain training, 24 game, arithmetic game, number puzzle, mahjong solitaire math, math challenge, brain teaser, educational math game, puzzle game, calculation game, free online math game, mental math, logic puzzle, stacking tile game">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <meta name="author" content="Number Mahjong">
+  <meta name="theme-color" content="#0b2528">
+  <link rel="canonical" href=".">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Number Mahjong - Brain Math Puzzle | Free Online Arithmetic Game">
+  <meta property="og:description" content="Select 3 number tiles and use addition, subtraction, multiplication or division to reach the target. 100 levels of brain-training math fun!">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Number Mahjong">
+  <meta property="og:locale" content="en_US">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Number Mahjong - Brain Math Puzzle">
+  <meta name="twitter:description" content="Select 3 number tiles and use + - × ÷ to reach the target. 100 challenging levels of arithmetic puzzle fun!">
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Number Mahjong",
+        "alternateName": "Number Mahjong - Brain Math Puzzle",
+        "url": ".",
+        "description": "A brain-training math puzzle game combining mahjong tile mechanics with arithmetic. Select 3 number tiles and use + - × ÷ to reach the target number across 100 levels.",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "genre": "Puzzle, Educational, Math",
+        "inLanguage": "en",
+        "browserRequirements": "Requires JavaScript"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "What is Number Mahjong?", "acceptedAnswer": { "@type": "Answer", "text": "Number Mahjong is a math puzzle game that combines classic mahjong tile mechanics with arithmetic calculation. Players select 3 number tiles and use addition, subtraction, multiplication, or division to calculate a target number. It is an educational brain-training game suitable for all ages." } },
+          { "@type": "Question", "name": "How do you play Number Mahjong?", "acceptedAnswer": { "@type": "Answer", "text": "Each level shows a target number on a stack of numbered tiles. Select exactly 3 unlocked tiles and use +, -, ×, ÷ to equal the target. Cleared tiles unlock layers beneath. Remove all tiles to complete the level. Progress through 100 increasingly challenging levels." } },
+          { "@type": "Question", "name": "Is Number Mahjong free to play?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, Number Mahjong is completely free to play online in your browser. No registration, download, or installation is required. Play instantly on desktop, tablet, or mobile." } },
+          { "@type": "Question", "name": "How many levels does Number Mahjong have?", "acceptedAnswer": { "@type": "Answer", "text": "Number Mahjong features 100 levels with progressively increasing difficulty. Each level has a unique target number and tile layout, providing hours of brain-training puzzle entertainment." } },
+          { "@type": "Question", "name": "What math skills does Number Mahjong improve?", "acceptedAnswer": { "@type": "Answer", "text": "Number Mahjong helps improve mental arithmetic, problem-solving, pattern recognition, logical reasoning, and strategic thinking. It's an excellent brain-training tool for both children learning math and adults keeping their minds sharp." } }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "." },
+          { "@type": "ListItem", "position": 2, "name": "Number Mahjong - Brain Math Puzzle", "item": "." }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #fff8df;
+      --muted: #c2d3cb;
+      --deep: #0b2528;
+      --panel: rgba(13, 39, 42, .84);
+      --panel-strong: rgba(8, 28, 31, .94);
+      --line: rgba(255, 235, 170, .24);
+      --gold: #f5bd55;
+      --green: #36b58a;
+      --red: #c84f45;
+      --blue: #3d8dc0;
+      --tile: #fff9df;
+      --tile-side: #c4a969;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --shadow: 0 18px 42px rgba(0, 0, 0, .3);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--deep);
+      color: var(--ink);
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    .app {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(6, 24, 27, .05), rgba(6, 19, 22, .78)),
+        url("assets/digital-mahjong-bg.svg") center / cover no-repeat;
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: calc(12px + var(--safe-top)) 12px calc(8px + var(--safe-bottom));
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .glass {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, .08);
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .primary,
+    .secondary {
+      min-height: 54px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 236, 176, .34);
+      padding: 0 18px;
+      cursor: pointer;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .primary {
+      color: #2b1903;
+      background: linear-gradient(180deg, #ffe08c, #e69b31);
+      box-shadow: 0 12px 24px rgba(207, 128, 34, .34), inset 0 1px 0 rgba(255, 255, 255, .55);
+    }
+
+    .secondary {
+      color: var(--ink);
+      background: rgba(255, 255, 255, .08);
+    }
+
+    .primary:active,
+    .secondary:active,
+    .icon-btn:active,
+    .level-card:active,
+    .tool:active {
+      transform: translateY(1px) scale(.99);
+    }
+
+    .home {
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: Min(18px, 2vh);
+    }
+
+    .home-top {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .brand {
+      margin-top: min(5vh, 60px);
+      text-align: center;
+      text-shadow: 0 8px 24px rgba(0, 0, 0, .32);
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 12px;
+      display: grid;
+      place-items: center;
+      border: 2px solid rgba(255, 223, 140, .7);
+      border-radius: 20px;
+      background: linear-gradient(145deg, #fff8df, #d5b56f);
+      color: #b9403c;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, .28);
+      font-size: 34px;
+      font-weight: 950;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 14vw, 48px);
+      line-height: .92;
+      letter-spacing: 0;
+      font-weight: 950;
+    }
+
+    .brand p {
+      width: min(300px, 84vw);
+      margin: 10px auto 0;
+      color: #e9f3ec;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .home-panel {
+      display: grid;
+      gap: Clamp(10px, 2vh, 13px);
+      padding: Clamp(12px, 2vh, 16px);
+      margin-top: auto;
+      margin-bottom: 0;
+    }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, .13);
+    }
+
+    .progress-bar span {
+      display: block;
+      width: 1%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--green), var(--gold));
+    }
+
+    .levels {
+      flex-direction: column;
+      gap: 10px;
+      background: linear-gradient(180deg, #12383b, #0b2528 62%, #07191c);
+    }
+
+    .header {
+      flex: 0 0 auto;
+      display: grid;
+      grid-template-columns: 44px 1fr 44px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-title {
+      text-align: center;
+      min-width: 0;
+    }
+
+    .header-title b {
+      display: block;
+      font-size: 20px;
+      line-height: 1.12;
+    }
+
+    .header-title span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .level-grid {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-content: start;
+      gap: 8px;
+      overflow-y: auto;
+      padding: 2px 0 2px;
+    }
+
+    .level-card {
+      position: relative;
+      min-height: 60px;
+      border: 1px solid rgba(255, 235, 170, .18);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .07);
+      color: rgba(255, 248, 223, .78);
+      cursor: pointer;
+      font-weight: 950;
+      font-size: 17px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, .18);
+    }
+
+    .level-card.unlocked {
+      color: var(--ink);
+      border-color: rgba(71, 218, 166, .55);
+      background: linear-gradient(180deg, rgba(54, 181, 138, .38), rgba(255, 255, 255, .08));
+    }
+
+    .level-card.done {
+      color: #2b1903;
+      border-color: rgba(255, 235, 170, .66);
+      background: linear-gradient(180deg, #ffe08c, #df9b35);
+    }
+
+    .level-card.locked {
+      cursor: not-allowed;
+      opacity: .68;
+    }
+
+    .level-card small {
+      position: absolute;
+      right: 7px;
+      top: 6px;
+      color: inherit;
+      opacity: .82;
+      font-size: 11px;
+    }
+
+    .level-card small.lock-icon {
+      font-size: 14px;
+      opacity: .9;
+    }
+
+    .game {
+      flex-direction: column;
+      gap: 6px;
+      background:
+        radial-gradient(circle at 50% 12%, rgba(245, 189, 85, .18), transparent 34%),
+        linear-gradient(180deg, #153f41, #0d292d 55%, #07191c);
+    }
+
+    .target-card {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border: 1px solid rgba(255, 235, 170, .22);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .08);
+    }
+
+    .target-card span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .target-number {
+      color: var(--gold);
+      text-align: center;
+      font-size: clamp(28px, 8vw, 40px);
+      line-height: .9;
+      font-weight: 950;
+    }
+
+    .target-meta {
+      display: grid;
+      justify-items: end;
+      gap: 1px;
+      white-space: nowrap;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .table {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid rgba(255, 235, 170, .2);
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(65, 157, 113, .28), transparent 54%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, .04) 0 9px, transparent 9px 18px),
+        #113539;
+      box-shadow: inset 0 0 38px rgba(0, 0, 0, .32), 0 16px 32px rgba(0, 0, 0, .2);
+    }
+
+    .board {
+      position: relative;
+      width: 860px;
+      height: 560px;
+      transform-origin: top left;
+    }
+
+    .tile {
+      position: absolute;
+      width: 72px;
+      height: 92px;
+      border: 1px solid #d2b872;
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, .94), rgba(255, 255, 255, .4) 35%, transparent 36%),
+        linear-gradient(145deg, #fffef6, var(--tile));
+      box-shadow: 4px 7px 0 var(--tile-side), 9px 15px 18px rgba(0, 0, 0, .28);
+      cursor: pointer;
+      transition: transform .14s ease, opacity .18s ease, filter .14s ease;
+      user-select: none;
+    }
+
+    .tile::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(190, 70, 60, .26);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .tile::after {
+      content: attr(data-num);
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: var(--tile-color, #b94742);
+      font-size: 34px;
+      font-weight: 950;
+    }
+
+    .tile small {
+      position: absolute;
+      left: 10px;
+      top: 8px;
+      z-index: 1;
+      color: #21765b;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .tile.locked {
+      cursor: not-allowed;
+      filter: grayscale(.42) brightness(.72);
+      opacity: .72;
+    }
+
+    .tile.selected {
+      outline: 4px solid rgba(245, 189, 85, .72);
+      transform: translate(-3px, -7px);
+    }
+
+    .tile.hint,
+    .tile.guide {
+      outline: 5px solid rgba(255, 223, 140, .86);
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    .tile.removed {
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-10px) scale(.86);
+    }
+
+    @keyframes pulse {
+      50% { transform: translateY(-7px); }
+    }
+
+    .playbar {
+      flex: 0 0 auto;
+      display: grid;
+      gap: 6px;
+      padding: 8px;
+      border: 1px solid rgba(255, 235, 170, .2);
+      border-radius: 18px;
+      background: var(--panel-strong);
+      box-shadow: 0 -10px 26px rgba(0, 0, 0, .12);
+    }
+
+    .slots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .slot {
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed rgba(255, 235, 170, .28);
+      border-radius: 12px;
+      color: rgba(255, 248, 223, .45);
+      background: rgba(255, 255, 255, .06);
+      font-size: 20px;
+      font-weight: 950;
+    }
+
+    .slot.filled {
+      color: var(--gold);
+      border-style: solid;
+      background: rgba(245, 189, 85, .12);
+    }
+
+    .message {
+      min-height: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .tool {
+      min-height: 48px;
+      display: grid;
+      place-items: center;
+      gap: 1px;
+      border: 1px solid rgba(255, 235, 170, .2);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, .08);
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 850;
+      padding: 2px;
+    }
+
+    .tool i {
+      font-style: normal;
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    .tool:disabled {
+      cursor: not-allowed;
+      opacity: .45;
+    }
+
+    .guide-box {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: calc(125px + var(--safe-bottom));
+      z-index: 50;
+      display: none;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid rgba(255, 235, 170, .34);
+      border-radius: 18px;
+      background: rgba(7, 23, 26, .94);
+      box-shadow: var(--shadow);
+    }
+
+    .guide-box.show {
+      display: grid;
+    }
+
+    .guide-box b {
+      color: var(--gold);
+    }
+
+    .guide-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .guide-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .guide-actions button {
+      min-height: 40px;
+      border: 1px solid rgba(255, 235, 170, .24);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, .08);
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    .settle {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(4, 13, 15, .68);
+      backdrop-filter: blur(7px);
+    }
+
+    .settle.show {
+      display: grid;
+    }
+
+    .settle-card {
+      width: min(420px, 100%);
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      text-align: center;
+    }
+
+    .medal {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      color: #2b1903;
+      background: linear-gradient(180deg, #ffe08c, #df9b35);
+      box-shadow: 0 14px 28px rgba(207, 128, 34, .32);
+      font-size: 36px;
+      font-weight: 950;
+    }
+
+    .settle h2 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .settle-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .stat {
+      padding: 10px 6px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .08);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stat b {
+      display: block;
+      margin-top: 2px;
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    .settle-actions {
+      display: grid;
+      gap: 9px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(16px + var(--safe-bottom));
+      z-index: 90;
+      max-width: min(420px, calc(100vw - 28px));
+      padding: 11px 14px;
+      border: 1px solid rgba(255, 235, 170, .22);
+      border-radius: 14px;
+      background: rgba(7, 23, 26, .94);
+      color: var(--ink);
+      text-align: center;
+      opacity: 0;
+      transform: translateX(-50%) translateY(14px);
+      transition: .2s ease;
+      pointer-events: none;
+      font-size: 14px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%);
+    }
+
+    @media (min-width: 720px) {
+      .app {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .screen {
+        width: 420px;
+        max-height: 100vh;
+        max-height: 100dvh;
+        left: 50%;
+        transform: translateX(-50%);
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .home {
+        justify-content: center;
+      }
+
+      .brand {
+        margin-top: 0;
+      }
+
+      .home-panel {
+        margin-top: Clamp(16px, 3vh, 24px);
+      }
+
+      .level-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .guide-box {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 392px;
+      }
+    }
+
+    @media (min-width: 720px) and (min-height: 800px) {
+      .screen {
+        width: 400px;
+      }
+
+      .brand {
+        margin-top: min(3vh, 40px);
+      }
+
+      .guide-box {
+        width: 372px;
+      }
+    }
+
+    @media (max-height: 640px) {
+      .brand {
+        margin-top: min(2vh, 20px);
+      }
+
+      .brand-mark {
+        width: 50px;
+        height: 50px;
+        font-size: 28px;
+      }
+
+      h1 {
+        font-size: clamp(36px, 10vw, 52px);
+      }
+
+      .brand p {
+        margin-top: 6px;
+        font-size: 11px;
+        line-height: 1.4;
+      }
+
+      .home-panel {
+        gap: 8px;
+        padding: 10px;
+      }
+
+      .primary, .secondary {
+        min-height: 46px;
+      }
+
+      .table {
+        border-radius: 14px;
+      }
+
+      .playbar {
+        gap: 4px;
+        padding: 6px;
+      }
+
+      .slots { gap: 4px; }
+
+      .slot {
+        height: 32px;
+        font-size: 18px;
+      }
+
+      .message {
+        min-height: 20px;
+        font-size: 11px;
+      }
+
+      .tools { gap: 4px; }
+
+      .tool {
+        min-height: 42px;
+        font-size: 9px;
+        border-radius: 10px;
+      }
+
+      .tool i { font-size: 15px; }
+
+      .icon-btn {
+        width: 38px;
+        height: 38px;
+      }
+
+      .level-card {
+        min-height: 50px;
+        font-size: 15px;
+        border-radius: 12px;
+      }
+
+      .level-card small.lock-icon {
+        font-size: 12px;
+        right: 5px;
+        top: 4px;
+      }
+
+      .level-grid {
+        gap: 6px;
+      }
+
+      .settle-card {
+        gap: 10px;
+        padding: 16px;
+      }
+
+      .medal {
+        width: 56px;
+        height: 56px;
+        font-size: 28px;
+      }
+
+      .settle h2 {
+        font-size: 21px;
+      }
+
+      .settle-stats {
+        gap: 6px;
+      }
+
+      .settle-actions {
+        gap: 6px;
+      }
+
+      .guide-box {
+        bottom: calc(100px + var(--safe-bottom));
+        gap: 6px;
+        padding: 10px;
+      }
+
+      .guide-actions button {
+        min-height: 34px;
+      }
+
+      .info-panel .info-content {
+        max-height: 55vh;
+        padding: 14px;
+        gap: 10px;
+      }
+
+      .info-content h2 {
+        font-size: 18px;
+      }
+
+      .info-content h3 {
+        font-size: 13px;
+      }
+
+      .info-content p,
+      .info-content li {
+        font-size: 11px;
+      }
+
+      .info-content details summary {
+        font-size: 12px;
+      }
+    }
+
+    .home-top {
+      justify-content: space-between;
+    }
+
+    .home-top-left {
+      display: flex;
+      gap: 6px;
+    }
+
+    .info-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(4, 13, 15, .72);
+      backdrop-filter: blur(8px);
+    }
+
+    .info-panel.show {
+      display: grid;
+    }
+
+    .info-content {
+      width: min(480px, 100%);
+      max-height: 78vh;
+      max-height: 78dvh;
+      overflow-y: auto;
+      display: grid;
+      gap: 14px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel-strong);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      overscroll-behavior: contain;
+    }
+
+    .info-content h2 {
+      margin: 0;
+      font-size: 22px;
+      color: var(--gold);
+    }
+
+    .info-content h3 {
+      margin: 0;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    .info-content p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .info-content ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      display: grid;
+      gap: 4px;
+    }
+
+    .info-content strong {
+      color: var(--ink);
+    }
+
+    .info-content details {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .info-content details summary {
+      cursor: pointer;
+      color: var(--ink);
+      font-weight: 850;
+      font-size: 13px;
+      padding: 6px 0;
+    }
+
+    .info-content details p {
+      margin-top: 4px;
+      padding-left: 4px;
+    }
+
+    .info-close-row {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .info-close-row button {
+      min-height: 40px;
+      padding: 0 20px;
+      border: 1px solid rgba(255, 235, 170, .24);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, .08);
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    @media (min-width: 720px) {
+      .info-content {
+        width: 440px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="screen home active" id="homeScreen">
+      <div class="home-top">
+        <div class="home-top-left">
+          <button class="icon-btn" id="infoBtn" type="button" aria-label="How to Play">?</button>
+        </div>
+        <button class="icon-btn sound-button" type="button" aria-label="Mute">♪</button>
+      </div>
+      <div class="brand">
+        <div class="brand-mark">8</div>
+        <h1>Number Mahjong Match</h1>
+        <p>Pick 3 number tiles, use + &minus; &times; &divide; to reach the target. Unlock layers &amp; clear the board!</p>
+      </div>
+      <section class="home-panel glass">
+        <div class="progress-row">
+          <span>Progress</span>
+          <b id="homeProgress">0 / 100</b>
+        </div>
+        <div class="progress-bar"><span id="progressBar"></span></div>
+        <button class="primary" id="startBtn" type="button">Start Game</button>
+      </section>
+    </section>
+
+    <section class="screen levels" id="levelsScreen">
+      <header class="header">
+        <button class="icon-btn" id="toHomeBtn" type="button" aria-label="Home">‹</button>
+        <div class="header-title">
+          <b>Select Level</b>
+          <span>100 levels &middot; Start from 1</span>
+        </div>
+        <button class="icon-btn sound-button" type="button" aria-label="Mute">♪</button>
+      </header>
+      <div class="level-grid" id="levelGrid"></div>
+    </section>
+
+    <section class="screen game" id="gameScreen">
+      <header class="header">
+        <button class="icon-btn" id="toLevelsBtn" type="button" aria-label="Levels">‹</button>
+        <div class="target-card">
+          <span>Target</span>
+          <strong class="target-number" id="targetNumber">24</strong>
+          <div class="target-meta">
+            <b id="levelText">1 / 100</b>
+            <small id="leftText">Left: 0</small>
+          </div>
+        </div>
+        <button class="icon-btn sound-button" type="button" aria-label="Mute">♪</button>
+      </header>
+
+      <div class="table" id="table">
+        <div class="board" id="board" aria-label="Mahjong tile board"></div>
+      </div>
+
+      <section class="playbar">
+        <div class="slots" id="slots"></div>
+        <div class="message" id="message">Select 3 unlocked tiles.</div>
+        <div class="tools">
+          <button class="tool" id="hintBtn" type="button"><i>?</i><b id="hintCount">3</b>Hint</button>
+          <button class="tool" id="autoBtn" type="button"><i>=</i><b id="autoCount">2</b>Auto</button>
+          <button class="tool" id="undoBtn" type="button"><i>↶</i><b id="undoCount">3</b>Undo</button>
+          <button class="tool" id="restartBtn" type="button"><i>↺</i>Restart</button>
+          <button class="tool sound-tool" id="soundTool" type="button"><i>♪</i><b>Sound</b>ON</button>
+        </div>
+      </section>
+    </section>
+
+    <aside class="guide-box" id="guideBox">
+      <b>Level 1 Tutorial</b>
+      <p>The 3 glowing tiles can make the target number. Tap them in any order to clear &amp; unlock lower layers.</p>
+      <div class="guide-actions">
+        <button id="guideMarkBtn" type="button">Show Combo</button>
+        <button id="guideSkipBtn" type="button">Skip Tutorial</button>
+      </div>
+    </aside>
+
+    <div class="settle" id="settleLayer">
+      <section class="settle-card glass">
+        <div class="medal">&#10003;</div>
+        <h2 id="settleTitle">Level Complete</h2>
+        <div class="settle-stats">
+          <div class="stat">Time<b id="settleTime">00:00</b></div>
+          <div class="stat">Moves<b id="settleMoves">0</b></div>
+          <div class="stat">Unlock<b id="settleUnlock">2</b></div>
+        </div>
+        <div class="settle-actions">
+          <button class="primary" id="nextLevelBtn" type="button">Next Level</button>
+          <button class="secondary" id="settleLevelsBtn" type="button">Levels</button>
+          <button class="secondary" id="settleHomeBtn" type="button">Home</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+      <div class="info-content">
+        <h2>How to Play Number Mahjong</h2>
+        <p>Number Mahjong is a <strong>brain-training math puzzle game</strong> that combines classic mahjong solitaire tile-stacking mechanics with arithmetic calculation. Each level presents a <strong>target number</strong> on a stack of numbered mahjong tiles. Your goal: select exactly <strong>3 unlocked number tiles</strong> and use <strong>addition (+), subtraction (&minus;), multiplication (&times;), or division (&divide;)</strong> to calculate the target number.</p>
+        <h3>Core Features</h3>
+        <ul>
+          <li><strong>100 progressively challenging levels</strong> with unique target numbers and tile layouts</li>
+          <li><strong>Stacked tile mechanics</strong> &mdash; clear upper tiles to unlock layers beneath</li>
+          <li><strong>Hint system</strong> to highlight a valid 3-tile combination when stuck</li>
+          <li><strong>Auto-match</strong> for instant automatic clearing of a valid trio</li>
+          <li><strong>Undo moves</strong> to reverse mistakes</li>
+          <li><strong>Free to play</strong> &mdash; no download, no registration</li>
+          <li>Fully responsive on <strong>desktop, tablet, and mobile</strong></li>
+        </ul>
+        <h3>Step-by-Step Instructions</h3>
+        <ul>
+          <li><strong>Step 1:</strong> Look at the <strong>target number</strong> displayed at the top of the game screen.</li>
+          <li><strong>Step 2:</strong> Tap <strong>3 unlocked tiles</strong> (tiles not covered by upper layers). Selected tiles appear in the slots below.</li>
+          <li><strong>Step 3:</strong> Use <strong>+ &minus; &times; &divide;</strong> to combine your 3 numbers and reach the target.</li>
+          <li><strong>Step 4:</strong> On success, tiles are removed and the layers beneath unlock.</li>
+          <li><strong>Step 5:</strong> <strong>Clear all tiles</strong> on the board to complete the level and unlock the next one.</li>
+        </ul>
+        <h3>Pro Tips &amp; Strategies</h3>
+        <ul>
+          <li><strong>Prioritize top-layer tiles</strong> &mdash; they unlock the most tiles underneath.</li>
+          <li><strong>Look for simple combos first:</strong> e.g., two numbers that multiply close to the target, then add or subtract the third.</li>
+          <li><strong>Use the Hint button</strong> when you get stuck &mdash; it highlights a valid combination.</li>
+          <li><strong>Practice mental math</strong> to improve speed and score fewer moves.</li>
+          <li><strong>Plan several moves ahead</strong> &mdash; see which tiles will be revealed after each clear.</li>
+        </ul>
+        <details>
+          <summary>What is Number Mahjong?</summary>
+          <p>Number Mahjong is a math puzzle game that combines classic mahjong tile mechanics with arithmetic challenges. Players select number tiles to calculate a target value using basic math operations. It's an educational brain-training game suitable for all ages.</p>
+        </details>
+        <details>
+          <summary>Is Number Mahjong free to play?</summary>
+          <p>Yes, Number Mahjong is <strong>completely free</strong> to play online in your browser. No registration, download, or installation required.</p>
+        </details>
+        <details>
+          <summary>How many levels are there?</summary>
+          <p>There are <strong>100 levels</strong> with increasing difficulty. Each level has a unique target number and tile layout for hours of brain-training entertainment.</p>
+        </details>
+        <details>
+          <summary>Can I play on mobile?</summary>
+          <p>Yes! Number Mahjong is fully responsive and works on <strong>desktop, tablet, and mobile</strong> devices with a touch-optimized interface.</p>
+        </details>
+        <details>
+          <summary>What skills does this game improve?</summary>
+          <p>Number Mahjong helps improve <strong>mental arithmetic, problem-solving, pattern recognition, logical reasoning, and strategic thinking</strong>. Great for both children learning math and adults keeping their minds sharp.</p>
+        </details>
+        <div class="info-close-row">
+          <button id="infoCloseBtn" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </main>
+
+  <script>
+    const $ = selector => document.querySelector(selector);
+    const $$ = selector => [...document.querySelectorAll(selector)];
+    const maxLevel = 100;
+    const tileW = 72;
+    const tileH = 92;
+    const targets = [
+      6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+      16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+      26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
+      36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
+      46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
+      56, 57, 58, 59, 60, 61, 62, 63, 64, 65,
+      66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
+      76, 77, 78, 79, 80, 81, 82, 83, 84, 85,
+      86, 87, 88, 89, 90, 91, 96, 98, 99, 24,
+      36, 48, 60, 72, 84, 27, 45, 63, 81, 99
+    ];
+    const colors = ["#b94742", "#21765b", "#286ca7", "#8a4e98"];
+    const tripleCache = new Map();
+    const progressKey = "digitalMahjongProgressV1";
+    const muteKey = "digitalMahjongMutedV1";
+    let progress = loadProgress();
+    let state = null;
+    let settleOpen = false;
+    let toastTimer = null;
+
+    const els = {
+      homeProgress: $("#homeProgress"),
+      progressBar: $("#progressBar"),
+      levelGrid: $("#levelGrid"),
+      table: $("#table"),
+      board: $("#board"),
+      target: $("#targetNumber"),
+      levelText: $("#levelText"),
+      leftText: $("#leftText"),
+      slots: $("#slots"),
+      message: $("#message"),
+      hintCount: $("#hintCount"),
+      autoCount: $("#autoCount"),
+      undoCount: $("#undoCount"),
+      hintBtn: $("#hintBtn"),
+      autoBtn: $("#autoBtn"),
+      undoBtn: $("#undoBtn"),
+      guide: $("#guideBox"),
+      settle: $("#settleLayer"),
+      settleTitle: $("#settleTitle"),
+      settleTime: $("#settleTime"),
+      settleMoves: $("#settleMoves"),
+      settleUnlock: $("#settleUnlock"),
+      nextLevelBtn: $("#nextLevelBtn"),
+      toast: $("#toast"),
+      soundTool: $("#soundTool")
+    };
+
+    class AudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.master = null;
+        this.timer = null;
+        this.step = 0;
+        this.muted = localStorage.getItem(muteKey) === "1";
+        this.available = !!(window.AudioContext || window.webkitAudioContext);
+      }
+
+      async start() {
+        if (!this.available) return false;
+        try {
+          if (!this.ctx) {
+            const Ctx = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new Ctx();
+            this.master = this.ctx.createGain();
+            this.master.gain.value = this.muted ? 0 : .38;
+            this.master.connect(this.ctx.destination);
+          }
+          if (this.ctx.state === "suspended") await this.ctx.resume();
+          this.startMusic();
+          return true;
+        } catch {
+          this.available = false;
+          return false;
+        }
+      }
+
+      startMusic() {
+        if (!this.ctx || this.timer) return;
+        const scale = [196, 246.94, 293.66, 329.63, 392, 493.88, 587.33, 659.25];
+        const tick = () => {
+          if (!this.ctx || this.muted) {
+            this.step++;
+            return;
+          }
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = this.step % 4 === 0 ? "triangle" : "sine";
+          osc.frequency.value = scale[this.step % scale.length];
+          gain.gain.setValueAtTime(.001, now);
+          gain.gain.linearRampToValueAtTime(.052, now + .04);
+          gain.gain.exponentialRampToValueAtTime(.001, now + .8);
+          osc.connect(gain).connect(this.master);
+          osc.start(now);
+          osc.stop(now + .86);
+          this.step++;
+        };
+        tick();
+        this.timer = setInterval(tick, 620);
+      }
+
+      setMuted(value) {
+        this.muted = value;
+        localStorage.setItem(muteKey, value ? "1" : "0");
+        if (this.master && this.ctx) {
+          this.master.gain.setTargetAtTime(value ? 0 : .38, this.ctx.currentTime, .04);
+        }
+        updateSoundUi();
+      }
+
+      async toggle() {
+        await this.start();
+        this.setMuted(!this.muted);
+      }
+
+      sfx(type) {
+        if (!this.ctx || this.muted) return;
+        const map = {
+          tap: [540, .055, "triangle"],
+          ok: [760, .13, "sine"],
+          bad: [155, .17, "sawtooth"],
+          win: [880, .24, "triangle"]
+        };
+        const [freq, len, wave] = map[type] || map.tap;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = wave;
+        osc.frequency.setValueAtTime(freq, now);
+        if (type === "win") osc.frequency.exponentialRampToValueAtTime(freq * 1.5, now + len);
+        gain.gain.setValueAtTime(.001, now);
+        gain.gain.linearRampToValueAtTime(.15, now + .015);
+        gain.gain.exponentialRampToValueAtTime(.001, now + len);
+        osc.connect(gain).connect(this.master);
+        osc.start(now);
+        osc.stop(now + len + .03);
+      }
+    }
+
+    const audio = new AudioEngine();
+
+    function loadProgress() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(progressKey) || "{}");
+        return {
+          highest: Math.min(maxLevel, Math.max(1, saved.highest || 1)),
+          completed: Array.isArray(saved.completed) ? saved.completed.filter(n => n >= 1 && n <= maxLevel) : [],
+          guideDone: !!saved.guideDone
+        };
+      } catch {
+        return { highest: 1, completed: [], guideDone: false };
+      }
+    }
+
+    function saveProgress() {
+      localStorage.setItem(progressKey, JSON.stringify(progress));
+    }
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function applyOp(a, b, op) {
+      if (op === "+") return a + b;
+      if (op === "-") return a - b;
+      if (op === "*") return a * b;
+      if (op === "/" && Math.abs(b) > 1e-9) return a / b;
+      return null;
+    }
+
+    function findSolution(values, target) {
+      const ops = ["+", "-", "*", "/"];
+      const items = values.map(value => ({ value, expr: String(value) }));
+
+      function search(list) {
+        if (list.length === 1) return Math.abs(list[0].value - target) < 1e-9 ? list[0].expr : null;
+        for (let i = 0; i < list.length; i++) {
+          for (let j = 0; j < list.length; j++) {
+            if (i === j) continue;
+            const rest = list.filter((_, index) => index !== i && index !== j);
+            for (const op of ops) {
+              const value = applyOp(list[i].value, list[j].value, op);
+              if (value === null || !Number.isFinite(value)) continue;
+              const found = search([...rest, { value, expr: `(${list[i].expr} ${op} ${list[j].expr})` }]);
+              if (found) return found;
+            }
+          }
+        }
+        return null;
+      }
+
+      return search(items);
+    }
+
+    function makeTargetTriple(target) {
+      if (!tripleCache.has(target)) {
+        const triples = [];
+        for (let a = 1; a <= 9; a++) {
+          for (let b = 1; b <= 9; b++) {
+            for (let c = 1; c <= 9; c++) {
+              const values = [a, b, c];
+              if (findSolution(values, target)) triples.push(values);
+            }
+          }
+        }
+        tripleCache.set(target, triples);
+      }
+      const triples = tripleCache.get(target);
+      return [...triples[rand(0, triples.length - 1)]];
+    }
+
+    function buildLayout(level) {
+      const spots = [];
+      const rows = 4 + Math.min(2, Math.floor(level / 3));
+      const cols = 7 + Math.min(2, Math.floor(level / 4));
+      const baseX = 70;
+      const baseY = 48;
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          if ((row === 0 || row === rows - 1) && (col === 0 || col === cols - 1) && Math.random() < .46) continue;
+          spots.push({ x: baseX + col * 82, y: baseY + row * 88, z: 0 });
+        }
+      }
+      const upper = [
+        { x: baseX + 85, y: baseY + 48, z: 1 }, { x: baseX + 167, y: baseY + 48, z: 1 },
+        { x: baseX + 249, y: baseY + 48, z: 1 }, { x: baseX + 331, y: baseY + 48, z: 1 },
+        { x: baseX + 126, y: baseY + 140, z: 1 }, { x: baseX + 208, y: baseY + 140, z: 1 },
+        { x: baseX + 290, y: baseY + 140, z: 1 }, { x: baseX + 372, y: baseY + 140, z: 1 },
+        { x: baseX + 208, y: baseY + 232, z: 2 }, { x: baseX + 290, y: baseY + 232, z: 2 },
+        { x: baseX + 249, y: baseY + 126, z: 3 }
+      ];
+      const extra = Math.min(upper.length, 6 + Math.floor(level * 1.4));
+      return [...spots, ...upper.slice(0, extra)];
+    }
+
+    function rect(tile) {
+      return { left: tile.x, top: tile.y, right: tile.x + tileW, bottom: tile.y + tileH };
+    }
+
+    function overlaps(a, b) {
+      const ra = rect(a);
+      const rb = rect(b);
+      const x = Math.min(ra.right, rb.right) - Math.max(ra.left, rb.left);
+      const y = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top);
+      return x > tileW * .26 && y > tileH * .26;
+    }
+
+    function unlockedFrom(tiles) {
+      const visible = tiles.filter(tile => !tile.removed);
+      return visible.filter(tile => !visible.some(other => other.z > tile.z && overlaps(tile, other)));
+    }
+
+    function assignValues(layout, target) {
+      const planned = layout.map((spot, index) => ({ ...spot, index, removed: false }));
+      const groups = [];
+      while (planned.some(tile => !tile.removed)) {
+        const open = unlockedFrom(planned).sort((a, b) => b.z - a.z || a.y - b.y || a.x - b.x);
+        if (open.length < 3) break;
+        const group = open.slice(0, 3);
+        const values = makeTargetTriple(target);
+        groups.push({ indexes: group.map(tile => tile.index), values });
+        for (const tile of group) tile.removed = true;
+      }
+      const byIndex = new Map(groups.flatMap(group => group.indexes.map((index, valueIndex) => [index, group.values[valueIndex]])));
+      return {
+        values: planned.map(tile => byIndex.get(tile.index) || rand(1, 9)),
+        groups: groups.map(group => group.indexes)
+      };
+    }
+
+    function generateLevel(level) {
+      const target = targets[level - 1];
+      let layout = buildLayout(level);
+      const excess = layout.length % 3;
+      if (excess) layout = layout.slice(0, layout.length - excess);
+      const plan = assignValues(layout, target);
+      const tiles = layout.map((spot, index) => ({
+        id: `l${level}-${Date.now()}-${index}`,
+        value: plan.values[index],
+        color: colors[index % colors.length],
+        ...spot,
+        removed: false,
+        selected: false,
+        locked: false,
+        hint: false,
+        guide: false
+      }));
+      return {
+        level,
+        target,
+        tiles,
+        solutionGroups: plan.groups.map(group => group.map(index => tiles[index].id)),
+        selected: [],
+        history: [],
+        props: { hint: 3, auto: 2, undo: 3 },
+        moves: 0,
+        startedAt: Date.now(),
+        completed: false
+      };
+    }
+
+    function updateLocks() {
+      const visible = state.tiles.filter(tile => !tile.removed);
+      for (const tile of visible) {
+        tile.locked = visible.some(other => other.z > tile.z && overlaps(tile, other));
+      }
+    }
+
+    function unlockedTiles() {
+      updateLocks();
+      return state.tiles.filter(tile => !tile.removed && !tile.locked);
+    }
+
+    function findMatch(candidates = unlockedTiles()) {
+      const candidateIds = new Set(candidates.map(tile => tile.id));
+      for (const group of state.solutionGroups) {
+        const trio = group.map(id => state.tiles.find(tile => tile.id === id));
+        if (trio.some(tile => !tile || tile.removed || !candidateIds.has(tile.id))) continue;
+        const expr = findSolution(trio.map(tile => tile.value), state.target);
+        if (expr) return { trio, expr };
+      }
+      for (let a = 0; a < candidates.length - 2; a++) {
+        for (let b = a + 1; b < candidates.length - 1; b++) {
+          for (let c = b + 1; c < candidates.length; c++) {
+            const trio = [candidates[a], candidates[b], candidates[c]];
+            const expr = findSolution(trio.map(tile => tile.value), state.target);
+            if (expr) return { trio, expr };
+          }
+        }
+      }
+      return null;
+    }
+
+    function setScreen(name) {
+      $$(".screen").forEach(screen => screen.classList.remove("active"));
+      $(`#${name}Screen`).classList.add("active");
+      if (name !== "game") hideGuide(false);
+      if (name === "levels") renderLevels();
+      if (name === "home") renderHome();
+    }
+
+    function renderHome() {
+      const done = progress.completed.length;
+      els.homeProgress.textContent = `${done} / ${maxLevel}`;
+      els.progressBar.style.width = `${Math.max(1, done / maxLevel * 100)}%`;
+    }
+
+    function renderLevels() {
+      els.levelGrid.innerHTML = "";
+      for (let level = 1; level <= maxLevel; level++) {
+        const done = progress.completed.includes(level);
+        const unlocked = level <= progress.highest;
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = `level-card ${done ? "done" : unlocked ? "unlocked" : "locked"}`;
+        card.innerHTML = `${level}${done ? '<small class="lock-icon">✓</small>' : unlocked ? "" : '<small class="lock-icon">🔒</small>'}`;
+        card.disabled = !unlocked;
+        card.addEventListener("click", () => {
+          startLevel(level);
+          audio.start().then(() => audio.sfx("tap"));
+        });
+        els.levelGrid.appendChild(card);
+      }
+    }
+
+    function renderSlots() {
+      els.slots.innerHTML = "";
+      for (let i = 0; i < 3; i++) {
+        const tile = state.selected[i];
+        const slot = document.createElement("div");
+        slot.className = `slot${tile ? " filled" : ""}`;
+        slot.textContent = tile ? tile.value : "·";
+        els.slots.appendChild(slot);
+      }
+    }
+
+    function renderGame() {
+      updateLocks();
+      els.board.innerHTML = "";
+      const remaining = state.tiles.filter(tile => !tile.removed).length;
+      els.target.textContent = state.target;
+      els.levelText.textContent = `${state.level} / ${maxLevel}`;
+      els.leftText.textContent = `Left: ${remaining}`;
+      const sorted = [...state.tiles].sort((a, b) => a.z - b.z);
+      for (const tile of sorted) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = [
+          "tile",
+          tile.removed ? "removed" : "",
+          tile.locked ? "locked" : "unlocked",
+          tile.selected ? "selected" : "",
+          tile.hint ? "hint" : "",
+          tile.guide ? "guide" : ""
+        ].join(" ");
+        button.style.left = `${tile.x + tile.z * 10}px`;
+        button.style.top = `${tile.y - tile.z * 10}px`;
+        button.style.zIndex = 10 + tile.z * 20;
+        button.style.setProperty("--tile-color", tile.color);
+        button.dataset.num = tile.value;
+        button.setAttribute("aria-label", `Tile ${tile.value}`);
+        button.innerHTML = `<small>${tile.z + 1}</small>`;
+        button.disabled = tile.removed;
+        button.addEventListener("click", () => selectTile(tile.id));
+        els.board.appendChild(button);
+      }
+      renderSlots();
+      els.hintCount.textContent = state.props.hint;
+      els.autoCount.textContent = state.props.auto;
+      els.undoCount.textContent = state.props.undo;
+      els.hintBtn.disabled = state.props.hint < 1;
+      els.autoBtn.disabled = state.props.auto < 1;
+      els.undoBtn.disabled = state.props.undo < 1 || state.history.length < 1;
+      scaleBoard();
+    }
+
+    function scaleBoard() {
+      const box = els.table.getBoundingClientRect();
+      if (!state || !state.tiles.length) return;
+      let maxX = 0, maxY = 0;
+      for (const tile of state.tiles) {
+        maxX = Math.max(maxX, tile.x + tile.z * 10 + tileW);
+        maxY = Math.max(maxY, tile.y - tile.z * 10 + tileH);
+      }
+      maxX += 30;
+      maxY += 30;
+      const scaleX = box.width / maxX;
+      const scaleY = box.height / maxY;
+      const s = Math.min(scaleX, scaleY, 1);
+      els.board.style.width = `${maxX}px`;
+      els.board.style.height = `${maxY}px`;
+      els.board.style.transform = `scale(${s})`;
+    }
+
+    function clearMarks() {
+      state.tiles.forEach(tile => {
+        tile.hint = false;
+        tile.guide = false;
+      });
+    }
+
+    function markMatch(asGuide) {
+      clearMarks();
+      const match = findMatch();
+      if (!match) {
+        showToast("No valid match found.");
+        audio.sfx("bad");
+        return;
+      }
+      if (!asGuide) state.props.hint--;
+      for (const tile of match.trio) {
+        tile[asGuide ? "guide" : "hint"] = true;
+      }
+      els.message.textContent = `Try: ${match.trio.map(tile => tile.value).join(", ")}`;
+      renderGame();
+    }
+
+    function selectTile(id) {
+      if (settleOpen) return;
+      const tile = state.tiles.find(item => item.id === id);
+      if (!tile || tile.removed) return;
+      clearMarks();
+      updateLocks();
+      if (tile.locked) {
+        showToast("This tile is blocked by upper layer.");
+        audio.sfx("bad");
+        return renderGame();
+      }
+      audio.sfx("tap");
+      if (tile.selected) {
+        tile.selected = false;
+        state.selected = state.selected.filter(item => item.id !== id);
+        els.message.textContent = "Selection cleared.";
+        return renderGame();
+      }
+      if (state.selected.length >= 3) {
+        showToast("Select up to 3 tiles at once.");
+        return;
+      }
+      tile.selected = true;
+      state.selected.push(tile);
+      if (state.selected.length === 3) resolveSelection();
+      else els.message.textContent = `Need ${3 - state.selected.length} more.`;
+      renderGame();
+    }
+
+    function resolveSelection() {
+      const values = state.selected.map(tile => tile.value);
+      const expr = findSolution(values, state.target);
+      if (!expr) {
+        for (const tile of state.selected) tile.selected = false;
+        state.selected = [];
+        els.message.textContent = `${values.join(", ")} cannot make ${state.target}.`;
+        showToast("No match. Selection cleared.");
+        audio.sfx("bad");
+        return;
+      }
+      const removed = state.selected.map(tile => tile.id);
+      for (const tile of state.selected) {
+        tile.removed = true;
+        tile.selected = false;
+      }
+      state.history.push({ removed, expr });
+      state.moves++;
+      state.selected = [];
+      els.message.textContent = `${expr} = ${state.target} ✓`;
+      audio.sfx("ok");
+      if (state.level === 1 && !progress.guideDone) finishGuide();
+      if (state.tiles.every(tile => tile.removed)) completeLevel();
+    }
+
+    function autoMatch() {
+      if (state.props.auto < 1) return;
+      clearMarks();
+      const match = findMatch();
+      if (!match) {
+        showToast("No valid match found.");
+        audio.sfx("bad");
+        return renderGame();
+      }
+      state.props.auto--;
+      const removed = match.trio.map(tile => tile.id);
+      for (const tile of match.trio) {
+        tile.removed = true;
+        tile.selected = false;
+      }
+      state.history.push({ removed, expr: match.expr });
+      state.moves++;
+      state.selected = [];
+      els.message.textContent = `Auto: ${match.expr} = ${state.target}`;
+      audio.sfx("ok");
+      if (state.level === 1 && !progress.guideDone) finishGuide();
+      if (state.tiles.every(tile => tile.removed)) completeLevel();
+      renderGame();
+    }
+
+    function undo() {
+      if (state.props.undo < 1 || state.history.length < 1) return;
+      clearMarks();
+      const last = state.history.pop();
+      for (const id of last.removed) {
+        const tile = state.tiles.find(item => item.id === id);
+        if (tile) tile.removed = false;
+      }
+      state.props.undo--;
+      state.moves = Math.max(0, state.moves - 1);
+      els.message.textContent = `Undo: ${last.expr}`;
+      audio.sfx("tap");
+      renderGame();
+    }
+
+    function startLevel(level) {
+      if (level > progress.highest) {
+        showToast("Complete previous levels first.");
+        return;
+      }
+      closeSettle();
+      state = generateLevel(level);
+      setScreen("game");
+      els.message.textContent = "Select 3 unlocked tiles.";
+      renderGame();
+      if (level === 1 && !progress.guideDone) showGuide();
+    }
+
+    function completeLevel() {
+      if (state.completed) return;
+      state.completed = true;
+      settleOpen = true;
+      hideGuide(false);
+      if (!progress.completed.includes(state.level)) progress.completed.push(state.level);
+      if (state.level < maxLevel) progress.highest = Math.max(progress.highest, state.level + 1);
+      if (state.level === 1) progress.guideDone = true;
+      saveProgress();
+      renderHome();
+      renderLevels();
+      audio.sfx("win");
+      els.settleTitle.textContent = `Level ${state.level} Complete`;
+      els.settleTime.textContent = formatTime(Date.now() - state.startedAt);
+      els.settleMoves.textContent = state.moves;
+      els.settleUnlock.textContent = state.level < maxLevel ? state.level + 1 : "All";
+      els.nextLevelBtn.textContent = state.level < maxLevel ? "Next Level" : "Levels";
+      els.settle.classList.add("show");
+    }
+
+    function formatTime(ms) {
+      const total = Math.max(0, Math.floor(ms / 1000));
+      return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+    }
+
+    function showGuide() {
+      els.guide.classList.add("show");
+      markMatch(true);
+    }
+
+    function hideGuide(render = true) {
+      els.guide.classList.remove("show");
+      if (state) {
+        state.tiles.forEach(tile => tile.guide = false);
+        if (render) renderGame();
+      }
+    }
+
+    function finishGuide() {
+      progress.guideDone = true;
+      saveProgress();
+      hideGuide(false);
+    }
+
+    function closeSettle() {
+      settleOpen = false;
+      els.settle.classList.remove("show");
+    }
+
+    function showToast(text) {
+      els.toast.textContent = text;
+      els.toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => els.toast.classList.remove("show"), 1700);
+    }
+
+    function updateSoundUi() {
+      $$(".sound-button").forEach(button => {
+        button.textContent = audio.muted ? "×" : "♪";
+        button.setAttribute("aria-label", audio.muted ? "Unmute" : "Mute");
+      });
+      els.soundTool.innerHTML = audio.muted ? "<i>×</i><b>Sound</b>OFF" : "<i>♪</i><b>Sound</b>ON";
+    }
+
+    $("#startBtn").addEventListener("click", () => {
+      setScreen("levels");
+      audio.start().then(() => audio.sfx("tap"));
+    });
+    $("#toHomeBtn").addEventListener("click", () => {
+      setScreen("home");
+      audio.sfx("tap");
+    });
+    $("#toLevelsBtn").addEventListener("click", () => {
+      setScreen("levels");
+      audio.sfx("tap");
+    });
+    $("#hintBtn").addEventListener("click", () => state.props.hint > 0 && markMatch(false));
+    $("#autoBtn").addEventListener("click", autoMatch);
+    $("#undoBtn").addEventListener("click", undo);
+    $("#restartBtn").addEventListener("click", () => startLevel(state.level));
+    $("#guideMarkBtn").addEventListener("click", () => markMatch(true));
+    $("#guideSkipBtn").addEventListener("click", finishGuide);
+    $("#nextLevelBtn").addEventListener("click", () => {
+      audio.sfx("tap");
+      if (state.level < maxLevel) startLevel(state.level + 1);
+      else {
+        closeSettle();
+        setScreen("levels");
+      }
+    });
+    $("#settleLevelsBtn").addEventListener("click", () => {
+      audio.sfx("tap");
+      closeSettle();
+      setScreen("levels");
+    });
+    $("#settleHomeBtn").addEventListener("click", () => {
+      audio.sfx("tap");
+      closeSettle();
+      setScreen("home");
+    });
+    $$(".sound-button").forEach(button => button.addEventListener("click", () => audio.toggle()));
+    $("#soundTool").addEventListener("click", () => audio.toggle());
+    $("#infoBtn")?.addEventListener("click", () => {
+      $("#infoPanel").classList.add("show");
+      audio.start().then(() => audio.sfx("tap"));
+    });
+    $("#infoCloseBtn")?.addEventListener("click", () => {
+      $("#infoPanel").classList.remove("show");
+      audio.sfx("tap");
+    });
+    $("#infoPanel")?.addEventListener("click", (e) => {
+      if (e.target === e.currentTarget) {
+        $("#infoPanel").classList.remove("show");
+      }
+    });
+    window.addEventListener("resize", () => state && renderGame());
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", () => state && renderGame());
+      window.visualViewport.addEventListener("scroll", () => state && renderGame());
+    }
+
+    renderHome();
+    renderLevels();
+    updateSoundUi();
+  </script>
+</body>
+</html>

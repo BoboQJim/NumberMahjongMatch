@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /assets/
 
-Sitemap: /sitemap.xml
+Sitemap: https://numbermahjongmatch.puzzlechallengehub.com/sitemap.xml
